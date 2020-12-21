@@ -81,7 +81,7 @@ class FrequencyAnalysis {
         //读取文件内容，转换成String
         val article = fileToString(srcFile)
         //加密文件
-        val encryptData = CaesarCrypt().encrypt(article, caesarKey)
+        val encryptData = CaesarCrypt.encrypt(article, caesarKey)
         //保存加密后的文件
         stringToFile(encryptData, destFile)
     }
@@ -138,7 +138,7 @@ class FrequencyAnalysis {
             println("猜测出来的秘钥caesarKey = " + caesarKey + "， 解密生成第" + deCount + "个备选文件" + "\n")
 
             // 使用上面我们猜测出来的秘钥caesarKey来解密内容
-            val decrypt = CaesarCrypt().deEncrypt(input, caesarKey)
+            val decrypt = CaesarCrypt.decrypt(input, caesarKey)
             // 然后将解密后的内容写入到文件中
             val fileName = "de_" + deCount + destPath
             stringToFile(decrypt, fileName)

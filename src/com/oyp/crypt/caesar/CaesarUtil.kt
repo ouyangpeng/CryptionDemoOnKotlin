@@ -10,18 +10,16 @@ fun main(args: Array<String>) {
     val originContent = "I Love You"
     // 秘钥
     val key = 1
-    // 加密算法
-    val encryptAlgorithm = CaesarCrypt()
     // 加密后的内容
-    val encryptContent = encryptAlgorithm.encrypt(originContent, key)
+    val encryptContent = CaesarCrypt.encrypt(originContent, key)
     println("${originContent} 凯撒加密之后的内容为：${encryptContent}")
     // 解密后的内容
-    val deEncryptContent = encryptAlgorithm.deEncrypt(encryptContent, key)
+    val deEncryptContent = CaesarCrypt.decrypt(encryptContent, key)
     println("${encryptContent} 凯撒解密之后的内容为：${deEncryptContent}")
 }
 
 
-class CaesarCrypt {
+object CaesarCrypt {
     /**
      * @param originContent 待加密的原文
      * @param key 秘钥
@@ -54,7 +52,7 @@ class CaesarCrypt {
      *
      * @return 解密后的内容
      */
-    fun deEncrypt(encryptContent: String, key: Int): String {
+    fun decrypt(encryptContent: String, key: Int): String {
         // 获取字符ASCII编码
         val charArray = encryptContent.toCharArray()
         return with(StringBuilder()) {
