@@ -6,7 +6,7 @@ import javax.crypto.Cipher
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.DESKeySpec
 
-object DesCrypt {
+object DESCrypt {
     //算法/工作模式/填充模式
     private val TRANSFORMATION = "DES/ECB/PKCS5Padding"
     private val CRYPT_ALGORITHM = "DES"
@@ -43,9 +43,9 @@ fun main(args: Array<String>) {
     val originContent = "欧阳鹏的博客：http://blog.csdn.net/ouyang_peng"
     // 自定义的des的秘钥
     val desKey = "12345678"
-    val desEncryptContent = DesCrypt.encrypt(originContent, desKey)
+    val desEncryptContent = DESCrypt.encrypt(originContent, desKey)
     println("原文为：【${originContent}】 进行Des加密后的内容为：【${desEncryptContent}】")
 
-    val desDecryptContent = DesCrypt.decrypt(desEncryptContent, desKey)
+    val desDecryptContent = DESCrypt.decrypt(desEncryptContent, desKey)
     println("秘文为：【${desEncryptContent}】 进行Des解密后的内容为：【${desDecryptContent}】")
 }
