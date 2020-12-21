@@ -1,4 +1,4 @@
-package com.oyp.crypt
+package com.oyp.crypt.caesar
 
 import java.io.IOException
 import java.io.File
