@@ -144,8 +144,6 @@ class FrequencyAnalysis {
             stringToFile(decrypt, fileName)
         }
     }
-
-
 }
 
 fun main(args: Array<String>) {
@@ -165,9 +163,9 @@ fun main(args: Array<String>) {
     println("====================解密============================")
 
     //读取加密后的文件
-    val artile = FrequencyAnalysis().fileToString("article_en.txt")
+    val article = FrequencyAnalysis().fileToString("article_en.txt")
     //解密（会生成多个备选文件）   然后我们查看几个备选文件，看哪个是解密对的，那么凯撒加密的秘钥我们就破解了
-    FrequencyAnalysis().decryptCaesarCode(artile, "article_de.txt");
+    FrequencyAnalysis().decryptCaesarCode(article, "article_de.txt");
 
 }
 

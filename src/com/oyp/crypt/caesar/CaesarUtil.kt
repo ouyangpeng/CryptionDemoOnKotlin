@@ -4,8 +4,6 @@ package com.oyp.crypt.caesar
  * 凯撒加密算法
  */
 fun main(args: Array<String>) {
-    // 移到字符
-
     // 原文
     val originContent = "I Love You"
     // 秘钥
@@ -53,22 +51,7 @@ object CaesarCrypt {
      * @return 解密后的内容
      */
     fun decrypt(encryptContent: String, key: Int): String {
-        // 获取字符ASCII编码
-        val charArray = encryptContent.toCharArray()
-        return with(StringBuilder()) {
-            charArray.forEach {
-                // 遍历每一个字符，对ASCII码进行偏移操作
-                val c: Char = it
-                // 字符转换成十进制,获取ASCII的值
-                var ascii: Int = c.toInt()
-                // 和加密的方向相反移动
-                ascii -= key
-                // 转成字符
-                val result = ascii.toChar()
-                append(result)
-            }
-            // 返回结果
-            toString()
-        }
+        // 只需要将秘钥变成对应的负数即可
+        return encrypt(encryptContent, -key)
     }
 }
