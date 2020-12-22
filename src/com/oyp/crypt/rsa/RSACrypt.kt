@@ -2,10 +2,9 @@ package com.oyp.crypt.rsa
 
 import com.oyp.crypt.encode.Base64Util
 import java.io.ByteArrayOutputStream
-import java.security.Key
-import java.security.KeyPairGenerator
-import java.security.PrivateKey
-import java.security.PublicKey
+import java.security.*
+import java.security.spec.PKCS8EncodedKeySpec
+import java.security.spec.X509EncodedKeySpec
 import javax.crypto.Cipher
 
 object RSACrypt {
@@ -146,15 +145,41 @@ object RSACrypt {
 }
 
 fun main(args: Array<String>) {
-    //秘钥对生成器
-    val pairGenerator = KeyPairGenerator.getInstance(RSACrypt.CRYPT_ALGORITHM)
-    // 秘钥对
-    val keyPair = pairGenerator.genKeyPair();
-    val publicKey = keyPair.public
-    val privateKey = keyPair.private
+//    //秘钥对生成器
+//    val pairGenerator = KeyPairGenerator.getInstance(RSACrypt.CRYPT_ALGORITHM)
+//    // 秘钥对
+//    val keyPair = pairGenerator.genKeyPair();
+//    val publicKey = keyPair.public
+//    val privateKey = keyPair.private
+//
+//    println("publicKey = ${Base64Util.encode(publicKey.encoded)} ")
+//    println("privateKey = ${Base64Util.encode(privateKey.encoded)}")
 
-    println("publicKey = ${Base64Util.encode(publicKey.encoded)} ")
-    println("privateKey = ${Base64Util.encode(privateKey.encoded)}")
+    // 保存秘钥对
+    val publicKeyStr = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcAy2jnNa1ST6RnLEsTyewfijqACw5IJpZ39RLmhiegv4A+v5amksJP6X8e8Hs1AAttibinofgL/ACC0+bXDvtPRmctXACeoksQ+9p+V8JHfluHCLYFBNoF8ag0Uyqf2i7aRZ5Cjhg1p3EPFWBpF4gQmY4/6/kJRCJY4+pkhHNnQIDAQAB"
+    val privateKeyStr = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJwDLaOc1rVJPpGcsSxPJ7B+KOoALDkgmlnf1EuaGJ6C/gD6/lqaSwk/pfx7wezUAC22JuKeh+Av8AILT5tcO+09GZy1cAJ6iSxD72n5Xwkd+W4cItgUE2gXxqDRTKp/aLtpFnkKOGDWncQ8VYGkXiBCZjj/r+QlEIljj6mSEc2dAgMBAAECgYB5VnN5i7Ll3ih+oaqedpW8y/JQRIAgkj3Z5p67igbZybF527xVhSkU8V7MZwhlhGD7LG9D096Du2Tkgh2RDIRCAIhLW3t2E4ecH1mvjEd1tAM9O8L71xhqFv7QKW+AYrqz9BjnVY0GQ7vtjVMm2FcaXkwO/gauliPyZJgP3zSj9QJBANdJZr8jL1fomvM0knsQreEOQf/VRu1A5T8q6rKRskQCbZJes7HF+wZwMRWd185CjEItO02XQ+mx0prld0lCaesCQQC5hCax57Rl2CxPDFyk43vFZ4WyPM3T4AK0uSWz7zL70JYEf5KGovxnJv5zK73jelA0pRut60zUa/7oorNYZvyXAkEArWqkCD1YapClGFl10QoLdmlcwq7TNlP7FhoE+higp2XpS2lbiEz5OyNudoIyDyTOBJSY25SIkRu7kShcITgNRwJBAIAjQmLxiw4pgXlcLYWKxwvz1Enna7fj65qOo/cjyhBa47PZtgie/T32lhxQ40kDS/EA9hxsAVZb/ecLslrmT6MCQBklolO3g3lhlzOMnXFgnIJUWYtKMWTUX1LklIGYot8+UnFUwhpHEU7IAjaF2jA1NZgjfN2Xfh/eTkOZSdOeWJQ="
+
+    // 字符串转换成秘钥对对象
+    val keyFactory = KeyFactory.getInstance(RSACrypt.CRYPT_ALGORITHM)
+    //下面的代码会报异常： java.security.spec.InvalidKeySpecException: Only RSAPrivate(Crt)KeySpec and PKCS8EncodedKeySpec supported for RSA private keys
+//    val privateKey = keyFactory.generatePrivate(SecretKeySpec(privateKeyStr.toByteArray(), RSACrypt.CRYPT_ALGORITHM))
+
+    //下面的代码会报异常： java.security.InvalidKeyException: invalid key format
+//    val privateKey = keyFactory.generatePrivate(PKCS8EncodedKeySpec(privateKeyStr.toByteArray()))
+
+    // 下面的代码  可以生成privateKey对象
+    val privateKey = keyFactory.generatePrivate(PKCS8EncodedKeySpec(Base64Util.decode(privateKeyStr)))
+
+
+    //下面的代码会报异常： java.security.spec.InvalidKeySpecException: Only RSAPublicKeySpec and X509EncodedKeySpec supported for RSA public keys
+//    val publicKey = keyFactory.generatePublic(SecretKeySpec(publicKeyStr.toByteArray(), RSACrypt.CRYPT_ALGORITHM))
+
+    //下面的代码会报异常：java.security.spec.InvalidKeySpecException: java.security.InvalidKeyException: invalid key format
+//    val publicKey = keyFactory.generatePublic(X509EncodedKeySpec(publicKeyStr.toByteArray()))
+
+    // 下面的代码  可以生成publicKey对象
+    val publicKey = keyFactory.generatePublic(X509EncodedKeySpec(Base64Util.decode(publicKeyStr)))
+
 
     // 原文
     val originContent = """欧阳鹏的博客：http://blog.csdn.net/ouyang_peng 欢迎大家一起来浏览，
@@ -168,7 +193,7 @@ fun main(args: Array<String>) {
     println("\n原文为：【${originContent}】 \nRSA私钥加密后的内容为：【${rsaPrivateKeyEncryptContent}】")
 
 
-    println("\n==============================RSA公钥加密======================================================")
+    println("\n==============================RSA公钥解密======================================================")
 
     // 解密  私钥加密后的秘文
     val rsaPublicKeyDecryptContent = RSACrypt.decryptByPublicKey(rsaPrivateKeyEncryptContent, publicKey)
@@ -185,7 +210,7 @@ fun main(args: Array<String>) {
     val rsaPublicKeyEncryptContent = RSACrypt.encryptByPublicKey(originContent, publicKey)
     println("\n原文为：【${originContent}】 \nRSA公钥加密后的内容为：【${rsaPublicKeyEncryptContent}】")
 
-    println("\n==============================RSA私钥加密======================================================")
+    println("\n==============================RSA私钥解密======================================================")
 
     // 解密  公钥加密后的秘文
     val rsaPrivateKeyDecryptContent = RSACrypt.decryptByPrivateKey(rsaPublicKeyEncryptContent, privateKey)
