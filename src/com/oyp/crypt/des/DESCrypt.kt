@@ -7,6 +7,9 @@ import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.DESKeySpec
 
 object DESCrypt {
+    //DES/CBC/NoPadding (56)
+    //DES 秘钥长度是8位，但是前7位参与加密计算，最后一位作为校验码。每位8个字节 所以是  7*8=56
+
     //算法/工作模式/填充模式
     private val TRANSFORMATION = "DES/ECB/PKCS5Padding"
     private val CRYPT_ALGORITHM = "DES"

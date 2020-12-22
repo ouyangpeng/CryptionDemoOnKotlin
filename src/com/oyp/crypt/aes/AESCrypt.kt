@@ -5,6 +5,9 @@ import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
 object AESCrypt {
+    //AES/CBC/NoPadding (128)
+    //AES 秘钥长度是16位，每位8个字节，所以是  16*8=128
+
     //算法/工作模式/填充模式
     private val TRANSFORMATION = "AES"
     private val CRYPT_ALGORITHM = "AES"
