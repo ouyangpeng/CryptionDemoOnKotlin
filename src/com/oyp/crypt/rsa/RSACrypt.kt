@@ -7,6 +7,14 @@ import java.security.spec.PKCS8EncodedKeySpec
 import java.security.spec.X509EncodedKeySpec
 import javax.crypto.Cipher
 
+/**
+ * RSA总结：
+ * 秘钥对：   公钥和私钥，必须由系统生成并且存储起来
+ * 加解密：   公钥加密，私钥解密；私钥加密，公钥解密
+ * 公钥互换： 两个组织或者人互相交换公钥
+ * 加密速度慢
+ * RSA数字签名
+ */
 object RSACrypt {
     /**
      * 算法
