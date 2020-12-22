@@ -52,11 +52,11 @@ object AESCrypt {
 fun main(args: Array<String>) {
     // 原文
     val originContent = "欧阳鹏的博客：http://blog.csdn.net/ouyang_peng"
-    // 自定义的des的秘钥
-    val desKey = "1234567812345678"
-    val desEncryptContent = AESCrypt.encrypt(originContent, desKey)
-    println("原文为：【${originContent}】 进行Des加密后的内容为：【${desEncryptContent}】")
+    // 自定义的aes的秘钥
+    val aesKey = "1234567812345678"
+    val aesEncryptContent = AESCrypt.encrypt(originContent, aesKey)
+    println("原文为：【${originContent}】 进行aes加密后的内容为：【${aesEncryptContent}】")
 
-    val desDecryptContent = AESCrypt.decrypt(desEncryptContent, desKey)
-    println("秘文为：【${desEncryptContent}】 进行Des解密后的内容为：【${desDecryptContent}】")
+    val aesDecryptContent = AESCrypt.decrypt(aesEncryptContent, aesKey)
+    println("秘文为：【${aesEncryptContent}】 进行aes解密后的内容为：【${aesDecryptContent}】")
 }
