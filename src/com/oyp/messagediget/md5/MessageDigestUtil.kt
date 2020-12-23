@@ -32,6 +32,18 @@ object MessageDigestUtil {
     }
 
     /**
+     * SHA256信息摘要
+     * @param input 要进行SHA256信息摘要的内容
+     */
+    fun sha256(input: String): String {
+        val messageDigest = MessageDigest.getInstance("SHA-256")
+        // 信息摘要后20个字节
+        val result = messageDigest.digest(input.toByteArray())
+        println("sha256信息摘要后的后长度： ${result.size}")
+        return covertToHex(result)
+    }
+
+    /**
      * 转换成16进制
      */
     private fun covertToHex(result: ByteArray): String {
@@ -54,12 +66,18 @@ object MessageDigestUtil {
 fun main(args: Array<String>) {
     val input = "欧阳鹏的博客：http://blog.csdn.net/ouyang_peng 欢迎大家一起来浏览"
     val md5 = MessageDigestUtil.md5(input)
-    println("md5信息摘要后的值为:${md5}")
     println("md5加密后转成16进制的长度为为:${md5.toByteArray().size}")
+    println("md5信息摘要后的值为:${md5}")
 
     println("=================================================================")
 
     val sha1 = MessageDigestUtil.sha1((input))
-    println("sha1信息摘要后的值为:${sha1}")
     println("sha1信息摘要后转成16进制的长度为为:${sha1.toByteArray().size}")
+    println("sha1信息摘要后的值为:${sha1}")
+
+    println("=================================================================")
+
+    val sha256 = MessageDigestUtil.sha256((input))
+    println("sha256信息摘要后转成16进制的长度为为:${sha256.toByteArray().size}")
+    println("sha256信息摘要后的值为:${sha256}")
 }
