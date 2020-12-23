@@ -7,15 +7,14 @@ import java.security.PublicKey
 import java.security.Signature
 
 object SignatureUtil {
-    // 获取数字签名实例对象
-    val signature = Signature.getInstance("SHA256withRSA")
-
     /**
      * 签名
      * @param privateKey 数字签名要使用的RSA私钥
      * @param input 要使用数字签名加密的内容
      */
     fun sign(input: String, privateKey: PrivateKey): String {
+        // 获取数字签名实例对象
+        val signature = Signature.getInstance("SHA256withRSA")
         // 初始化签名，如果不调用会报错：java.security.SignatureException: object not initialized for signing
         // 签名要用私钥加密
         signature.initSign(privateKey)
@@ -33,6 +32,8 @@ object SignatureUtil {
      * @param sign 要校验的签名
      */
     fun verify(input: String, publicKey: PublicKey, sign: String): Boolean {
+        // 获取数字签名实例对象
+        val signature = Signature.getInstance("SHA256withRSA")
         // 初始化签名  签名要用公钥校验
         signature.initVerify(publicKey)
         signature.update(input.toByteArray())
@@ -54,6 +55,9 @@ fun main(args: Array<String>) {
     val publicKey = RSACrypt.getPublicKey()
     val verify = SignatureUtil.verify(input, publicKey, sign)
     println("数字签名 校验内容结果为：${verify}")
+
+    val verify2 = SignatureUtil.verify(input + "瞎写的篡改的内容", publicKey, sign)
+    println("数字签名 校验内容结果为：${verify2}")
 }
 
 
