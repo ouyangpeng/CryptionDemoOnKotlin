@@ -6,8 +6,11 @@ import javax.crypto.Cipher
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.DESKeySpec
 import javax.crypto.spec.IvParameterSpec
-
-object DESCrypt {
+/**
+ * 对称加密：DES
+ * 特点：可逆，加密速度快，可以加密大文件
+ */
+object DESCryptUtil {
     //DES/CBC/NoPadding (56)
     //DES 秘钥长度是8位，但是前7位参与加密计算，最后一位作为校验码。每位8个字节 所以是  7*8=56
 
@@ -58,9 +61,9 @@ fun main(args: Array<String>) {
     val originContent = "欧阳鹏的博客：http://blog.csdn.net/ouyang_peng"
     // 自定义的des的秘钥
     val desKey = "12345678"
-    val desEncryptContent = DESCrypt.encrypt(originContent, desKey)
+    val desEncryptContent = DESCryptUtil.encrypt(originContent, desKey)
     println("原文为：【${originContent}】 进行Des加密后的内容为：【${desEncryptContent}】")
 
-    val desDecryptContent = DESCrypt.decrypt(desEncryptContent, desKey)
+    val desDecryptContent = DESCryptUtil.decrypt(desEncryptContent, desKey)
     println("秘文为：【${desEncryptContent}】 进行Des解密后的内容为：【${desDecryptContent}】")
 }

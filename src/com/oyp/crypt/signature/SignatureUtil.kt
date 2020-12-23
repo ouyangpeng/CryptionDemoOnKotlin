@@ -1,11 +1,19 @@
-package com.oyp
+package com.oyp.crypt.signature
 
 import com.oyp.crypt.encode.Base64Util
-import com.oyp.crypt.rsa.RSACrypt
+import com.oyp.crypt.rsa.RSACryptUtil
 import java.security.PrivateKey
 import java.security.PublicKey
 import java.security.Signature
 
+/**
+ * 算法： SHA256withRSA   消息摘要+非对称加密
+ * 特点：
+ *     私钥签名
+ *     公钥校验
+ *
+ *  应用场景： 校验数据完整性
+ */
 object SignatureUtil {
     /**
      * 签名
@@ -46,13 +54,13 @@ fun main(args: Array<String>) {
     println("===========================签名===================================")
     val input = "欧阳鹏的博客：http://blog.csdn.net/ouyang_peng 欢迎大家一起来浏览"
     // 获取RSA私钥
-    val privateKey = RSACrypt.getPrivateKey()
+    val privateKey = RSACryptUtil.getPrivateKey()
     val sign = SignatureUtil.sign(input, privateKey)
     println("数字签名内容为：${sign}")
 
     println("===========================校验===================================")
     // 获取RSA公钥
-    val publicKey = RSACrypt.getPublicKey()
+    val publicKey = RSACryptUtil.getPublicKey()
     val verify = SignatureUtil.verify(input, publicKey, sign)
     println("数字签名 校验内容结果为：${verify}")
 

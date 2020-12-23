@@ -1,9 +1,12 @@
-package com.oyp.messagediget.md5
+package com.oyp.crypt.diget
 
 import java.lang.StringBuilder
 import java.security.MessageDigest
 
 /**
+ * 算法： MD5、SHA-1、SHA-256
+ * 1、不可逆，加密后不可破解
+ * 2、加密后秘文长度固定，和原始数据大小无关
  * 消息摘要后的结果是固定长度，无论你的数据有多大，即使一个G的文件，摘要结果都是固定长度
  */
 object MessageDigestUtil {
