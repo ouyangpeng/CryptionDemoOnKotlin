@@ -1,6 +1,6 @@
 package com.oyp.messagediget.md5
 
-import java.lang.StringBuilder
+import com.oyp.messagediget.HexUtil
 import java.security.MessageDigest
 
 /**
@@ -12,19 +12,7 @@ object Md5Util {
         // 信息摘要后16个字节
         val result = messageDigest.digest(input.toByteArray())
         println("md5信息摘要后的后长度： ${result.size}")
-        val stringBuilder = StringBuilder()
-        // 转换成16进制
-        result.forEach {
-            val hex = it.toInt() and (0xFF)
-            val hexString = Integer.toHexString(hex)
-            if (hexString.length == 1) {
-                stringBuilder.append("0").append(hexString)
-            } else {
-                stringBuilder.append(hexString)
-            }
-        }
-        // 信息摘要后的转成16进制则是32个字节
-        return stringBuilder.toString()
+        return HexUtil.covertToHex(result)
     }
 }
 
